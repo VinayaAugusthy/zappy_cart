@@ -3,7 +3,7 @@ import 'package:zappy_cart/core/colors/colors.dart';
 import 'package:zappy_cart/core/constants/constants.dart';
 
 class CartTile extends StatelessWidget {
-  const CartTile({
+  CartTile({
     super.key,
     required this.size,
     required this.assetImage,
@@ -17,7 +17,7 @@ class CartTile extends StatelessWidget {
   final AssetImage assetImage;
   final String title;
   final String price;
-  final String quantity;
+  String quantity;
   final String cartQuantity;
   @override
   Widget build(BuildContext context) {
