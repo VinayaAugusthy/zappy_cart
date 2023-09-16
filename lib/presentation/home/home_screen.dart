@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zappy_cart/applications/bloc/cart_bloc.dart';
+import 'package:zappy_cart/applications/bloc/cart_state.dart';
 import 'package:zappy_cart/core/colors/colors.dart';
 import 'package:zappy_cart/core/constants/constants.dart';
 import 'package:zappy_cart/presentation/home/widgets/cart_tile.dart';
@@ -11,6 +14,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final CartBloc greenAppleCartBloc = CartBloc();
+  final CartBloc appleCartBloc = CartBloc();
+
+  @override
+  void dispose() {
+    greenAppleCartBloc.close();
+    appleCartBloc.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -95,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 textBody('Grand Total', 20, FontWeight.bold),
                                 Text(
-                                  '\$259.00',
+                                  '\.00',
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -110,22 +123,30 @@ class _HomeScreenState extends State<HomeScreen> {
                               FontWeight.normal,
                             ),
                             CartTile(
+                              cartQuantity: greenAppleCartBloc
+                                  .state.cartQuantity
+                                  .toString(),
+                              cartBloc: greenAppleCartBloc,
                               size: size,
                               assetImage:
                                   const AssetImage('assets/images/ga.jpeg'),
                               title: 'Green Apple',
                               price: '182.00',
                               quantity: '1 Kg',
-                              cartQuantity: '1',
+                              // cartQuantity: state.cartQuantity.toString(),
                             ),
                             CartTile(
+                              cartQuantity:
+                                  appleCartBloc.state.cartQuantity.toString(),
+                              cartBloc: appleCartBloc,
                               size: size,
-                              assetImage:
-                                  const AssetImage('assets/images/apple.jpeg'),
+                              assetImage: const AssetImage(
+                                'assets/images/apple.jpeg',
+                              ),
                               title: 'Apple',
                               price: '92.00',
                               quantity: '500 g',
-                              cartQuantity: '1',
+                              // cartQuantity: '1',
                             ),
                             const Divider(
                               color: Colors.black,
@@ -163,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           top: size.width * 0.03,
                         ),
                         child: textBody(
-                          'Add products worth \$25 to avail coupon',
+                          'Add products worth \ to avail coupon',
                           16,
                           FontWeight.normal,
                         ),
